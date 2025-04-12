@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>💖 Our Memories 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #ffe6f0, #ccffff);
+      color: #ff1493;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin: 30px;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      padding: 20px;
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    .gallery img, .gallery video {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0 0 15px #ffaadd;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      cursor: pointer;
+    }
+
+    .gallery img:hover, .gallery video:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
+    }
+
+    .fullscreen-viewer {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      transition: 0.3s ease;
+    }
+
+    .fullscreen-viewer img,
+    .fullscreen-viewer video {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #fff;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎉 Happy Birthday, My Love in advance🫶🏻 🎉</h1>
+
+  <div class="gallery">
+    <!-- Images -->
+    <img src="https://i.imgur.com/kxU5fDJ.jpeg" alt="Memory 1" onclick="showFullscreen(this.src, 'image')" />
+    <img src="https://i.imgur.com/GYkW3sm.jpeg" alt="Memory 2" onclick="showFullscreen(this.src, 'image')" />
+    <video muted autoplay loop onclick="toggleMute(this); showFullscreen(this.querySelector('source').src, 'video')">
+      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+    </video>
+    <video muted autoplay loop onclick="toggleMute(this); showFullscreen(this.querySelector('source').src, 'video')">
+      <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
+    </video>
+    <img src="Snapchat-1384263608 - Copy.jpg"Memory 3" onclick="showFullscreen(this.src, 'image')" />
+    <img src="Snapchat-1260909232 - Copy.jpg" alt="Memory 4" onclick="showFullscreen(this.src, 'image')" />
+    <img src="Snapchat-1730667367 - Copy.jpg" alt="Memory 5" onclick="showFullscreen(this.src, 'image')" />
+    <img src="Snapchat-1260909232 - Copy (5) - Copy.jpg" alt="Memory 6" onclick="showFullscreen(this.src, 'image')" />
+    <img src="Snapchat-1260909232 - Copy (6) - Copy.jpg" alt="Memory 7" onclick="showFullscreen(this.src, 'image')" />
+    <img src="Snapchat-1260909232 - Copy.jpg" alt="Memory 8" onclick="showFullscreen(this.src, 'image')" />
+    <img src="Snapchat-1384263608 - Copy.jpg" alt="Memory 9" onclick="showFullscreen(this.src, 'image')" />
+    <img src="sn" alt="Memory 10" onclick="showFullscreen(this.src, 'image')" />
+    </div>
+
+  <!-- Fullscreen Viewer -->
+  <div id="viewer" class="fullscreen-viewer" onclick="closeFullscreen()">
+    <span class="close">&times;</span>
+    <img id="fsImg" src="" style="display: none;">
+    <video id="fsVid" controls style="display: none;"></video>
+  </div>
+
+  <script>
+    function showFullscreen(src, type) {
+      const viewer = document.getElementById("viewer");
+      const img = document.getElementById("fsImg");
+      const vid = document.getElementById("fsVid");
+
+      if (type === 'image') {
+        img.src = src;
+        img.style.display = 'block';
+        vid.style.display = 'none';
+        vid.pause();
+      } else {
+        vid.src = src;
+        vid.style.display = 'block';
+        img.style.display = 'none';
+        vid.muted = false;
+        vid.play();
+      }
+
+      viewer.style.display = 'flex';
+    }
+
+    function closeFullscreen() {
+      const viewer = document.getElementById("viewer");
+      const vid = document.getElementById("fsVid");
+      viewer.style.display = 'none';
+      vid.pause();
+      vid.muted = true;
+    }
+
+    function toggleMute(video) {
+      video.muted = !video.muted;
+    }
+  </script>
+
+</body>
+</html>
