@@ -8,14 +8,16 @@
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #ffe6f0, #ccffff);
+      background: linear-gradient(to bottom right, #fff0f5, #ccffff);
       color: #ff1493;
       text-align: center;
+      position: relative;
+      overflow-x: hidden;
     }
 
     h1 {
-      font-size: 3rem;
-      margin: 30px;
+      font-size: 2.5rem;
+      margin: 20px;
       animation: float 4s ease-in-out infinite;
     }
 
@@ -26,24 +28,31 @@
 
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 15px;
       padding: 20px;
       max-width: 1300px;
       margin: auto;
     }
 
-    .gallery img, .gallery video {
-      width: 100%;
+    .card {
+      background-color: white;
       border-radius: 15px;
-      box-shadow: 0 0 15px #ffaadd;
-      transition: transform 0.3s ease, filter 0.3s ease;
-      cursor: pointer;
+      padding: 10px;
+      box-shadow: 0 0 10px #ff99cc;
+      transition: transform 0.3s ease;
     }
 
-    .gallery img:hover, .gallery video:hover {
+    .card:hover {
       transform: scale(1.05);
-      filter: brightness(1.2);
+    }
+
+    .card img, .card video {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      cursor: pointer;
     }
 
     .fullscreen-viewer {
@@ -56,15 +65,39 @@
       align-items: center;
       justify-content: center;
       z-index: 999;
-      transition: 0.3s ease;
     }
 
-    .fullscreen-viewer img,
     .fullscreen-viewer video {
       max-width: 90vw;
       max-height: 90vh;
-      border-radius: 20px;
+      border-radius: 10px;
       box-shadow: 0 0 20px #fff;
+    }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 192, 203, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      flex-direction: column;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .modal h2 {
+      color: #d60087;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .modal p {
+      color: #c71585;
+      font-size: 1.3rem;
     }
 
     .close {
@@ -75,73 +108,177 @@
       color: white;
       cursor: pointer;
     }
+
+    .close-msg {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: #c71585;
+      cursor: pointer;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 2rem;
+      animation: heartAnimation 3s infinite;
+    }
+
+    @keyframes heartAnimation {
+      0% { transform: translateY(0); opacity: 1; }
+      50% { transform: translateY(-20px); opacity: 0.8; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .heart-sprinkle {
+      position: fixed;
+      top: -30px;
+      font-size: 1.5rem;
+      color: #ff69b4;
+      animation: fallSprinkle 4s linear forwards;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    @keyframes fallSprinkle {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    #clickPrompt {
+      position: fixed;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      background-color: rgba(255, 255, 255, 0.7);
+      padding: 10px;
+      font-size: 1.1rem;
+      color: #d60087;
+      z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      .gallery {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        padding: 10px;
+      }
+      .card img, .card video { height: 150px; }
+      .modal h2 { font-size: 1.8rem; }
+      .modal p { font-size: 1.1rem; }
+    }
+
+    @media (max-width: 480px) {
+      h1 { font-size: 1.8rem; }
+      .gallery { grid-template-columns: 1fr; }
+      .card img, .card video { height: 120px; }
+      .modal h2 { font-size: 1.6rem; }
+      .modal p { font-size: 1rem; }
+    }
   </style>
 </head>
 <body>
 
-  <h1>🎉 Happy Birthday, My Love in advance🫶🏻 🎉</h1>
+  <h1>🎉 Happy Birthday in Advance, My Love 🫶🏻 🎉</h1>
 
   <div class="gallery">
-    <!-- Images -->
-    <img src="https://i.imgur.com/kxU5fDJ.jpeg" alt="Memory 1" onclick="showFullscreen(this.src, 'image')" />
-    <img src="https://i.imgur.com/GYkW3sm.jpeg" alt="Memory 2" onclick="showFullscreen(this.src, 'image')" />
-    <video muted autoplay loop onclick="toggleMute(this); showFullscreen(this.querySelector('source').src, 'video')">
-      <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
-    </video>
-    <video muted autoplay loop onclick="toggleMute(this); showFullscreen(this.querySelector('source').src, 'video')">
-      <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4" />
-    </video>
-    <img src="Snapchat-1384263608 - Copy.jpg"Memory 3" onclick="showFullscreen(this.src, 'image')" />
-    <img src="Snapchat-1260909232 - Copy.jpg" alt="Memory 4" onclick="showFullscreen(this.src, 'image')" />
-    <img src="Snapchat-1730667367 - Copy.jpg" alt="Memory 5" onclick="showFullscreen(this.src, 'image')" />
-    <img src="Snapchat-1260909232 - Copy (5) - Copy.jpg" alt="Memory 6" onclick="showFullscreen(this.src, 'image')" />
-    <img src="Snapchat-1260909232 - Copy (6) - Copy.jpg" alt="Memory 7" onclick="showFullscreen(this.src, 'image')" />
-    <img src="Snapchat-1260909232 - Copy.jpg" alt="Memory 8" onclick="showFullscreen(this.src, 'image')" />
-    <img src="Snapchat-1384263608 - Copy.jpg" alt="Memory 9" onclick="showFullscreen(this.src, 'image')" />
-    <img src="sn" alt="Memory 10" onclick="showFullscreen(this.src, 'image')" />
-    </div>
+    <div class="card"><img src="IMG-20230315-WA0007 (2).jpg" alt="Memory 1" onclick="showMessage(0)" /></div>
+    <div class="card"><img src="IMG-20230403-WA0046 - Copy.jpg" alt="Memory 2" onclick="showMessage(1)" /></div>
+    <div class="card"><video muted autoplay loop onclick="openVideoFullscreen(this)"><source src="VID_126030905_162410_615 - Copy.mp4" type="video/mp4" /></video></div>
+    <div class="card"><video muted autoplay loop onclick="openVideoFullscreen(this)"><source src="Video.Guru_20231007_181354089 - Copy.mp4" type="video/mp4" /></video></div>
+    <div class="card"><img src="Snapchat-667331636 - Copy.jpg" alt="Memory 3" onclick="showMessage(2)" /></div>
+    <div class="card"><img src="Screenshot_2023-06-10-13-57-42-90_a63b0f8076346d26cbdc1b971a1da2a7 - Copy.jpg" alt="Memory 4" onclick="showMessage(3)" /></div>
+    <div class="card"><img src="Snapchat-1260909232 - Copy.jpg" alt="Memory 5" onclick="showMessage(4)" /></div>
+    <div class="card"><img src="Snapchat-1384263608 - Copy.jpg" alt="Memory 6" onclick="showMessage(5)" /></div>
+    <div class="card"><img src="Snapchat-1730667367 - Copy.jpg" alt="Memory 7" onclick="showMessage(6)" /></div>
+    <div class="card"><img src="Snapchat-1327623006.jpg" alt="Memory 8" onclick="showMessage(7)" /></div>
+    <div class="card"><img src="IMG-20230619-WA0057.jpg" alt="Memory 9" onclick="showMessage(8)" /></div>
+    <div class="card"><img src="IMG-20221225-WA0025 - Copy.jpg" alt="Memory 10" onclick="showMessage(9)" /></div>
+  </div>
 
-  <!-- Fullscreen Viewer -->
-  <div id="viewer" class="fullscreen-viewer" onclick="closeFullscreen()">
+  <div id="msgModal" class="modal">
+    <span class="close-msg" onclick="closeMessage()">&times;</span>
+    <h2>💌 My Love 💌</h2>
+    <p id="loveMsg">You are my favorite memory, my forever man.</p>
+  </div>
+
+  <div id="viewer" class="fullscreen-viewer" onclick="closeVideoFullscreen()">
     <span class="close">&times;</span>
-    <img id="fsImg" src="" style="display: none;">
-    <video id="fsVid" controls style="display: none;"></video>
+    <video id="fsVid" controls autoplay></video>
+  </div>
+
+  <div id="clickPrompt">
+    <p>💬 Click on the photos and videos to see the memories! 💖</p>
   </div>
 
   <script>
-    function showFullscreen(src, type) {
+    const messages = [
+      "Every time I look at this picture, I remember how lucky I am to have you. 💖",
+      "Your smile melts my heart every single time 😘",
+      "This day, this moment, this picture — forever engraved in my soul 🥹",
+      "You're not just my puppy. You're my whole world. 🌍💘",
+      "You’re my favorite view — always have been, always will be 💑",
+      "Just thinking about you gives me butterflies 🦋💗",
+      "You’re the sexiest, sweetest, and most amazing man ever 😍",
+      "This memory? Pure magic with my king ✨👑",
+      "With you, every moment is an adventure of love ❤️‍🔥",
+      "Can we freeze time here forever? Because this is bliss. 💞 chal ab jyada ho gya nikal to .... haa nikl 😂🤣🤣"
+    ];
+
+    function showMessage(index) {
+      document.getElementById("loveMsg").textContent = messages[index] || "You mean the world to me. 💋";
+      document.getElementById("msgModal").style.display = "flex";
+    }
+
+    function closeMessage() {
+      document.getElementById("msgModal").style.display = "none";
+    }
+
+    function openVideoFullscreen(videoEl) {
       const viewer = document.getElementById("viewer");
-      const img = document.getElementById("fsImg");
       const vid = document.getElementById("fsVid");
-
-      if (type === 'image') {
-        img.src = src;
-        img.style.display = 'block';
-        vid.style.display = 'none';
-        vid.pause();
-      } else {
-        vid.src = src;
-        vid.style.display = 'block';
-        img.style.display = 'none';
-        vid.muted = false;
-        vid.play();
-      }
-
+      vid.src = videoEl.currentSrc;
       viewer.style.display = 'flex';
     }
 
-    function closeFullscreen() {
+    function closeVideoFullscreen() {
       const viewer = document.getElementById("viewer");
       const vid = document.getElementById("fsVid");
-      viewer.style.display = 'none';
       vid.pause();
-      vid.muted = true;
+      viewer.style.display = 'none';
     }
 
-    function toggleMute(video) {
-      video.muted = !video.muted;
+    function sprinkleHearts(duration = 3000) {
+      const startTime = Date.now();
+      const interval = setInterval(() => {
+        if (Date.now() - startTime > duration) {
+          clearInterval(interval);
+          return;
+        }
+
+        const heart = document.createElement("div");
+        heart.classList.add("heart-sprinkle");
+        heart.textContent = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (Math.random() * 1.5 + 1) + "rem";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 4000);
+      }, 150);
     }
+
+    window.addEventListener('load', () => {
+      const duration = Math.floor(Math.random() * 3000) + 2000;
+      sprinkleHearts(duration);
+    });
   </script>
-
 </body>
 </html>

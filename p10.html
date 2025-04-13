@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,31 +12,72 @@
     }
 
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', sans-serif;
       background: linear-gradient(to top right, #ffdde1, #ee9ca7);
-      color: #333;
+      overflow: hidden;
+      height: 100vh;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      padding: 1rem;
-      text-align: center;
     }
 
-    .container {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 20px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    .animation-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to top right, #ffdde1, #ee9ca7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 2;
+    }
+
+    .tree {
+      width: 60px;
+      height: 0;
+      background-color: #8B4513;
+      animation: growTree 3s ease forwards;
+      margin-bottom: 10px;
+    }
+
+    .heart {
+      font-size: 2.5rem;
+      opacity: 0;
+      animation: fallHeart 3s ease 2s forwards;
+    }
+
+    @keyframes growTree {
+      0% { height: 0; }
+      100% { height: 200px; }
+    }
+
+    @keyframes fallHeart {
+      0% { transform: translateY(-100px); opacity: 0; }
+      50% { opacity: 1; }
+      100% { transform: translateY(40px); opacity: 1; }
+    }
+
+    .content {
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 1s ease, transform 1s ease;
+      z-index: 1;
       max-width: 600px;
       width: 100%;
-      transition: transform 0.3s ease-in-out;
+      text-align: center;
+      padding: 2rem;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
       position: relative;
     }
 
-    .container:hover {
-      transform: scale(1.02);
+    .content.show {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .title {
@@ -53,18 +93,10 @@
     }
 
     .cute-img {
-      width: 30%;
-      height: 10%;
-      background-repeat: no-repeat;
-      background-size: contain;
+      width: 40%;
       border-radius: 10px;
       margin-bottom: 1rem;
       animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
     }
 
     .question {
@@ -85,7 +117,6 @@
       border-radius: 25px;
       font-size: 1rem;
       cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
     }
 
     .yes {
@@ -106,38 +137,48 @@
       background-color: #ccc;
     }
 
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
     @media screen and (max-width: 600px) {
       .title {
         font-size: 1.5rem;
       }
-
       .question {
         font-size: 1.2rem;
-      }
-
-      button {
-        font-size: 0.9rem;
-        padding: 0.6rem 1.2rem;
       }
     }
   </style>
 </head>
-
 <body>
-  <div class="container">
+
+  <div class="animation-wrapper" id="animationWrapper">
+    <div class="tree"></div>
+    <div class="heart">💖</div>
+  </div>
+
+  <div class="content" id="proposalContent">
     <div class="title">💖 A Special Question 💖</div>
-    <div class="birthday">🎂  My Love! 🎉
-      <br>10 days left💋🎂🫶🏻
-    </div>
+    <div class="birthday">🎂 My Love!<br>10 days left💋🎂🫶🏻</div>
     <img class="cute-img" src="https://images.unsplash.com/photo-1571160713589-0a9c68c7929d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cute Cartoon Couple" />
     <div class="question" id="questionText">Will you be mine forever? 💍</div>
     <div class="buttons">
-      <button class="yes" onclick="goToNextPage()">Yes 💕</button>
+     <a href="day10.html"> <button class="yes" onclick="goToNextPage()">Yes 💕</button></a>
       <button class="no" id="noBtn" onclick="moveNoButton()">No 😢</button>
     </div>
   </div>
 
   <script>
+    // Delay showing the content
+    window.onload = function () {
+      setTimeout(() => {
+        document.getElementById('animationWrapper').style.display = 'none';
+        document.getElementById('proposalContent').classList.add('show');
+      }, 4500);
+    };
+
     let noClickCount = 0;
 
     function moveNoButton() {
@@ -151,30 +192,19 @@
       } else if (noClickCount === 2) {
         noBtn.innerText = 'Nahi chalega 😤';
         question.innerText = 'Come on, say YES 😢';
-      }
-     else if (noClickCount === 3) {
-        noBtn.innerText = 'haa bol😤';
-        question.innerText = 'Come on, say YES 😢';
-      }
-     else if (noClickCount === 2) {
-        noBtn.innerText = 'Nahi chalega 😤';
-        question.innerText = 'Come on, say YES 😢';
-      }
-       else if (noClickCount >= 3) {
+      } else {
         const x = Math.random() * 300;
         const y = Math.random() * 200;
         noBtn.style.position = 'absolute';
         noBtn.style.left = `${x}px`;
         noBtn.style.top = `${y}px`;
-        
         question.innerText = 'You can’t say no! 😈';
       }
     }
 
     function goToNextPage() {
-      window.location.href = 'next.html';
+      window.location.href = 'next.html'; // customize this
     }
   </script>
 </body>
-
 </html>
